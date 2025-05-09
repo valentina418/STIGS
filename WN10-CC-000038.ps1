@@ -1,7 +1,6 @@
 #
 .SYNOPSIS
-    This PowerShell script disables insecure WDigest credential caching by removing the `UseLogonCredential` registry value from the system. This is required to comply with STIG ID WN10-CC-000038 and helps prevent plaintext 
-password storage in LSASS memory.
+    This PowerShell script creates the 'UseLogonCredential' registry value and sets it to 0 to comply with STIG ID WN10-CC-000038.
 
 .NOTES
     Author          : Valentina Diaz
@@ -24,16 +23,17 @@ password storage in LSASS memory.
 Run this script as Administrator. Save it as a `.ps1` file and execute:
     .\Remove-UseLogonCredential.ps1
 #>
- $regPath = "HKLM:\SYSTEM\CurrentControlSet\Control\SecurityProviders\WDigest"
-$valueName = "UseLogonCredential"
 
-if (Test-Path $regPath) {
-    if (Get-ItemProperty -Path $regPath -Name $valueName -ErrorAction SilentlyContinue) {
-        Remove-ItemProperty -Path $regPath -Name $valueName
-        Write-Output "'$valueName' successfully removed from $regPath."
-    } else {
-        Write-Output "'$valueName' does not exist at $regPath. Nothing to remove."
-    }
-} else {
-    Write-Output "Registry path $regPath does not exist."
-} 
+$regPath = "HKLM:\SYSTEM\CurrentControlSet\Control\SecurityProviders\WDigest"
+$valueName = "UseLogonCredential"
+$valueData = 0
+
+# Ensure the registry path exists
+if (-not (Test-Path $regPath)) {
+    New-Item -Path $regPath -Force | Out-Null
+    Write-Output "Created registry path: $regPath"
+}
+
+# Set the registry value
+Set-ItemProperty -Path $regPath -Name $valueName -Value $valueData -Type DWord
+Write-Output "Set '$valueName' to $valueData at $regPath"
