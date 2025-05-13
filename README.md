@@ -4,7 +4,7 @@ This project contains a collection of PowerShell scripts used to **remediate Win
 
 ---
 
-## 📄 STIG Scripts Index
+## STIG Scripts Index
 
 | STIG ID            | Description                                                  | Script Name              |
 |--------------------|--------------------------------------------------------------|--------------------------|
@@ -28,7 +28,7 @@ Created and maintained by **Valentina Diaz**
 
 ---
 
-## 📌 Notes
+## Notes
 
 - All scripts are written in PowerShell and require **elevated (admin) privileges**
 - Registry paths under `HKLM:\SOFTWARE\Policies\Microsoft\Windows\...` are used for persistence and policy-level configuration
