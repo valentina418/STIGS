@@ -1,4 +1,4 @@
-#
+<#
 .SYNOPSIS
     This PowerShell script creates the 'UseLogonCredential' registry value and sets it to 0 to comply with STIG ID WN10-CC-000038.
 
